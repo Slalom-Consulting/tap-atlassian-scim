@@ -14,20 +14,17 @@ from singer_sdk.authenticators import BearerTokenAuthenticator
 SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
-class atlassian-scimStream(RESTStream):
+class atlassianScimStream(RESTStream):
     """atlassian-scim stream class."""
 
-    # TODO: Set the API's base URL here:
-    url_base = "https://api.mysample.com"
-
     # OR use a dynamic url_base:
-    # @property
-    # def url_base(self) -> str:
-    #     """Return the API URL root, configurable via tap settings."""
-    #     return self.config["api_url"]
+    @property
+    def url_base(self) -> str:
+        """Return the API URL root, configurable via tap settings."""
+        return "https://api.atlassian.com/scim/directory/" + self.config["directory_id"]
 
-    records_jsonpath = "$[*]"  # Or override `parse_response`.
-    next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
+    records_jsonpath = "$.Resources[*]"  # Or override `parse_response`.
+    # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
 
     @property
     def authenticator(self) -> BearerTokenAuthenticator:
@@ -54,14 +51,19 @@ class atlassian-scimStream(RESTStream):
         # TODO: If pagination is required, return a token which can be used to get the
         #       next page. If this is the final page, return "None" to end the
         #       pagination loop.
-        if self.next_page_token_jsonpath:
-            all_matches = extract_jsonpath(
-                self.next_page_token_jsonpath, response.json()
-            )
-            first_match = next(iter(all_matches), None)
-            next_page_token = first_match
+        if response.totalResults < previous_token:
+            return None 
+        # if self.next_page_token_jsonpath:
+        #     all_matches = extract_jsonpath(
+        #         self.next_page_token_jsonpath, response.json()
+        #     )
+        #     first_match = next(iter(all_matches), None)
+        #     next_page_token = first_match
+        elif previous_token: 
+            next_page_token = previous_token + self.config["batch_size"]
+
         else:
-            next_page_token = response.headers.get("X-Next-Page", None)
+            next_page_token = 1 + self.config["batch_size"]
 
         return next_page_token
 
@@ -71,10 +73,16 @@ class atlassian-scimStream(RESTStream):
         """Return a dictionary of values to be used in URL parameterization."""
         params: dict = {}
         if next_page_token:
-            params["page"] = next_page_token
-        if self.replication_key:
-            params["sort"] = "asc"
-            params["order_by"] = self.replication_key
+            params["startIndex"] = next_page_token
+
+        else: 
+            params["startIndex"] = 1
+            
+        params["count"] = self.config["batch_size"]
+
+        # if self.replication_key:
+        #    params["sort"] = "asc"
+        #    params["order_by"] = self.replication_key
         return params
 
     def prepare_request_payload(

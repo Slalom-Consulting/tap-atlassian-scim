@@ -13,7 +13,7 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 #       - Copy-paste as many times as needed to create multiple stream types.
 
 
-class UsersStream(atlassian-scimStream):
+class UsersStream(atlassianScimStream):
     """Define custom stream."""
     name = "users"
     path = "/users"
@@ -49,7 +49,7 @@ class UsersStream(atlassian-scimStream):
     ).to_dict()
 
 
-class GroupsStream(atlassian-scimStream):
+class GroupsStream(atlassianScimStream):
     """Define custom stream."""
     name = "groups"
     path = "/groups"
