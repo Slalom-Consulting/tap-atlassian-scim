@@ -1,4 +1,4 @@
-"""atlassian-scim tap class."""
+"""atlassianScim tap class."""
 
 from typing import List
 
@@ -6,7 +6,7 @@ from singer_sdk import Tap, Stream
 from singer_sdk import typing as th  # JSON schema typing helpers
 # TODO: Import your custom stream types here:
 from tap_atlassian_scim.streams import (
-    atlassian-scimStream,
+    atlassianScimStream,
     UsersStream,
     GroupsStream,
 )
@@ -18,35 +18,34 @@ STREAM_TYPES = [
 ]
 
 
-class Tapatlassian-scim(Tap):
+class TapAtlassianScim(Tap):
     """atlassian-scim tap class."""
     name = "tap-atlassian-scim"
 
     # TODO: Update this section with the actual config values you expect:
     config_jsonschema = th.PropertiesList(
         th.Property(
-            "auth_token",
+            "api_key",
             th.StringType,
             required=True,
-            description="The token to authenticate against the API service"
+            description="The key to authenticate against the API service"
         ),
         th.Property(
-            "project_ids",
-            th.ArrayType(th.StringType),
-            required=True,
-            description="Project IDs to replicate"
-        ),
-        th.Property(
-            "start_date",
-            th.DateTimeType,
-            description="The earliest record date to sync"
-        ),
-        th.Property(
-            "api_url",
+            "directory_id",
             th.StringType,
-            default="https://api.mysample.com",
-            description="The url for the API service"
+            required=True,
+            description="Directory ID for the SCIM thing"
         ),
+        th.Property(
+            "batch_size",
+            th.IntegerType,
+            description="The number of records to return in each API call (Max of 100)"
+        ),
+        th.Property(
+            "user_agent",
+            th.StringType,
+            description="The user agent to present to the API"
+        )
     ).to_dict()
 
     def discover_streams(self) -> List[Stream]:
