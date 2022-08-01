@@ -35,4 +35,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 # CLI declaration
-tap-atlassian-scim = 'tap_atlassian_scim.tap:Tapatlassian-scim.cli'
+tap-atlassian-scim = 'tap_atlassian_scim.tap:TapAtlassianScim.cli'

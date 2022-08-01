@@ -1,4 +1,4 @@
-"""REST client handling, including atlassian-scimStream base class."""
+"""REST client handling, including atlassianScimStream base class."""
 
 import requests
 from pathlib import Path
@@ -15,7 +15,7 @@ SCHEMAS_DIR = Path(__file__).parent / Path("./schemas")
 
 
 class atlassianScimStream(RESTStream):
-    """atlassian-scim stream class."""
+    """atlassianScim stream class."""
 
     # OR use a dynamic url_base:
     @property
@@ -51,20 +51,20 @@ class atlassianScimStream(RESTStream):
         # TODO: If pagination is required, return a token which can be used to get the
         #       next page. If this is the final page, return "None" to end the
         #       pagination loop.
-        if response.totalResults < previous_token:
-            return None 
+        
         # if self.next_page_token_jsonpath:
         #     all_matches = extract_jsonpath(
-        #         self.next_page_token_jsonpath, response.json()
+     #            self.next_page_token_jsonpath, response.json()
         #     )
         #     first_match = next(iter(all_matches), None)
         #     next_page_token = first_match
-        elif previous_token: 
-            next_page_token = previous_token + self.config["batch_size"]
-
+        if previous_token: 
+            if response.totalResults < previous_token:
+                return None 
+            else:
+                next_page_token = previous_token + self.config["batch_size"]
         else:
             next_page_token = 1 + self.config["batch_size"]
-
         return next_page_token
 
     def get_url_params(
