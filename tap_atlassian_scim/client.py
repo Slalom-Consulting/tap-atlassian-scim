@@ -21,8 +21,8 @@ class atlassianScimStream(RESTStream):
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
-        endpoint = self.config.get("directory_id")
-        return f"https://api.atlassian.com/scim/directory/{endpoint}"
+        directory_id = self.config.get("directory_id")
+        return f"https://api.atlassian.com/scim/directory/{directory_id}"
 
     records_jsonpath = "$.Resources[*]"  # Or override `parse_response`.
     # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
