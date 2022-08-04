@@ -6,13 +6,13 @@ from singer_sdk import Tap, Stream
 from singer_sdk import typing as th  # JSON schema typing helpers
 
 from tap_atlassian_scim.streams import (
-    # atlassianScimStream,
-    UsersStream,
+    #atlassianScimStream,
+#    UsersStream,
     GroupsStream,
 )
 
 STREAM_TYPES = [
-    UsersStream,
+#    UsersStream,
     GroupsStream,
 ]
 
