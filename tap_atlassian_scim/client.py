@@ -60,7 +60,7 @@ class atlassianScimStream(RESTStream):
         #     first_match = next(iter(all_matches), None)
         #     next_page_token = first_match
         if previous_token: 
-            if response.totalResults < previous_token:
+            if response.json().get("totalResults") < previous_token:
                 return None 
             else:
                 next_page_token = previous_token + self.config["batch_size"]
