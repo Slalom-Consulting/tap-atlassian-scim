@@ -25,7 +25,7 @@ class TapAtlassianScim(Tap):
     # TODO: Update this section with the actual config values you expect:
     config_jsonschema = th.PropertiesList(
         th.Property(
-            "api_key",
+            "directory_api_key",
             th.StringType,
             required=True,
             description="The key to authenticate against the API service"
