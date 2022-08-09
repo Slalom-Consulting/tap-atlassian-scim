@@ -12,11 +12,11 @@ class UsersStream(atlassianScimStream):
     primary_keys = ["id"]
     replication_key = None
     schema = th.PropertiesList(
-#        th.Property(
-#            "schemas",
-#            th.ArrayType(th.StringType),
-#            description="SCIM schemas that define the attributes present in the current JSON structure. This field is required during user creation or modification."
-#        ),
+        th.Property(
+            "schemas",
+            th.ArrayType(th.StringType),
+            description="SCIM schemas that define the attributes present in the current JSON structure."
+        ),
         th.Property(
             "userName",
             th.StringType,
@@ -240,11 +240,11 @@ class GroupsStream(atlassianScimStream):
     primary_keys = ["id"]
     replication_key = None
     schema = th.PropertiesList(
-#        th.Property(
-#            "schemas",
-#            th.ArrayType(th.StringType),
-#            description="SCIM schemas that define the attributes present in the current JSON structure. This field is required during user creation or modification."
-#        ),
+        th.Property(
+            "schemas",
+            th.ArrayType(th.StringType),
+            description="SCIM schemas that define the attributes present in the current JSON structure."
+        ),
         th.Property(
             "id",
             th.StringType,
