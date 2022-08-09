@@ -21,7 +21,8 @@ class atlassianScimStream(RESTStream):
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
-        return "https://api.atlassian.com/scim/directory/" + self.config["directory_id"]
+        directory_id = self.config.get("directory_id")
+        return f"https://api.atlassian.com/scim/directory/{directory_id}"
 
     records_jsonpath = "$.Resources[*]"  # Or override `parse_response`.
     # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
@@ -31,13 +32,13 @@ class atlassianScimStream(RESTStream):
         """Return a new authenticator object."""
         return BearerTokenAuthenticator.create_for_stream(
             self,
-            token=self.config.get("api_key")
+            token=self.config.get("directory_api_key")
         )
 
     @property
     def http_headers(self) -> dict:
         """Return the http headers needed."""
-        headers = {}
+        headers = {"Accept": "application/json"}
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
         # If not using an authenticator, you may also provide inline auth headers:
@@ -59,7 +60,7 @@ class atlassianScimStream(RESTStream):
         #     first_match = next(iter(all_matches), None)
         #     next_page_token = first_match
         if previous_token: 
-            if response.totalResults < previous_token:
+            if response.json().get("totalResults") < previous_token:
                 return None 
             else:
                 next_page_token = previous_token + self.config["batch_size"]

@@ -7,8 +7,10 @@ from singer_sdk.testing import get_standard_tap_tests
 from tap_atlassian_scim.tap import TapAtlassianScim
 
 SAMPLE_CONFIG = {
-    "start_date": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
-    # TODO: Initialize minimal tap config
+    "directory_api_key": "abcdABCD1234",
+    "directory_id": "00000000-00000000-00000000-00000000",
+    "batch_size": 100,
+    "user_agent": "singer tap",
 }
 
 
