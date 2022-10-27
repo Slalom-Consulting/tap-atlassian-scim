@@ -6,6 +6,9 @@ from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from tap_atlassian_scim.pagination import AtlassianScimPaginator
 
+PAGINATION_INDEX = 1
+
+
 class AtlassianScimStream(RESTStream):
     """atlassianScim stream class."""
     @property
@@ -36,14 +39,14 @@ class AtlassianScimStream(RESTStream):
 
     def get_new_paginator(self) -> AtlassianScimPaginator:
         limit = self.config['limit']
-        return AtlassianScimPaginator(start_value=1, page_size=limit)
+        return AtlassianScimPaginator(start_value=PAGINATION_INDEX, page_size=limit)
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
         """Return a dictionary of values to be used in URL parameterization."""
         params = {
-            'startIndex': 1,
+            'startIndex': PAGINATION_INDEX,
             'count': self.config['limit']
         }
         
