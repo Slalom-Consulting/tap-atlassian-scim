@@ -13,12 +13,12 @@ from singer_sdk.authenticators import BearerTokenAuthenticator
 class AtlassianScimStream(RESTStream):
     """atlassianScim stream class."""
 
-    # OR use a dynamic url_base:
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
-        directory_id = self.config.get("directory_id")
-        return f"https://api.atlassian.com/scim/directory/{directory_id}"
+        api_url = self.config['api_url']
+        directory_id = self.config['directory_id']
+        return f'{api_url}/scim/directory/{directory_id}'
 
     records_jsonpath = "$.Resources[*]"  # Or override `parse_response`.
     # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
@@ -41,28 +41,28 @@ class AtlassianScimStream(RESTStream):
         # headers["Private-Token"] = self.config.get("auth_token")
         return headers
 
-    #def get_next_page_token(
-    #    self, response: requests.Response, previous_token: Optional[Any]
-    #) -> Optional[Any]:
-    #    """Return a token for identifying next page or None if no more pages."""
-    #    # TODO: If pagination is required, return a token which can be used to get the
-    #    #       next page. If this is the final page, return "None" to end the
-    #    #       pagination loop.
-    #    
-    #    # if self.next_page_token_jsonpath:
-    #    #     all_matches = extract_jsonpath(
-    # #            self.next_page_token_jsonpath, response.json()
-    #    #     )
-    #    #     first_match = next(iter(all_matches), None)
-    #    #     next_page_token = first_match
-    #    if previous_token: 
-    #        if response.json().get("totalResults") < previous_token:
-    #            return None 
-    #        else:
-    #            next_page_token = previous_token + self.config["batch_size"]
-    #    else:
-    #        next_page_token = 1 + self.config["batch_size"]
-    #    return next_page_token
+    def get_next_page_token(
+        self, response: requests.Response, previous_token: Optional[Any]
+    ) -> Optional[Any]:
+        """Return a token for identifying next page or None if no more pages."""
+        # TODO: If pagination is required, return a token which can be used to get the
+        #       next page. If this is the final page, return "None" to end the
+        #       pagination loop.
+        
+        # if self.next_page_token_jsonpath:
+        #     all_matches = extract_jsonpath(
+     #            self.next_page_token_jsonpath, response.json()
+        #     )
+        #     first_match = next(iter(all_matches), None)
+        #     next_page_token = first_match
+        if previous_token: 
+            if response.json().get("totalResults") < previous_token:
+                return None 
+            else:
+                next_page_token = previous_token + self.config["batch_size"]
+        else:
+            next_page_token = 1 + self.config["batch_size"]
+        return next_page_token
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]

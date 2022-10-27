@@ -41,6 +41,12 @@ class TapAtlassianScim(Tap):
             "user_agent",
             th.StringType,
             description="User agent to present to the API"
+        ),
+        th.Property(
+            'api_url',
+            th.StringType,
+            default='https://api.atlassian.com',
+            description='API URL'
         )
     ).to_dict()
 
