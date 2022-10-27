@@ -24,7 +24,7 @@ class AtlassianScimStream(RESTStream):
         """Return a new authenticator object."""
         return BearerTokenAuthenticator.create_for_stream(
             self,
-            token=self.config.get('directory_api_key')
+            token=self.config['api_key']
         )
 
     @property
@@ -36,6 +36,9 @@ class AtlassianScimStream(RESTStream):
             headers['User-Agent'] = self.config.get('user_agent')
 
         return headers
+
+    #def get_new_paginator(self) -> BaseAPIPaginator:
+    #    return None
 
     def get_next_page_token(
         self, response: requests.Response, previous_token: Optional[Any]
@@ -55,9 +58,9 @@ class AtlassianScimStream(RESTStream):
             if response.json().get("totalResults") < previous_token:
                 return None 
             else:
-                next_page_token = previous_token + self.config["batch_size"]
+                next_page_token = previous_token + self.config["limit"]
         else:
-            next_page_token = 1 + self.config["batch_size"]
+            next_page_token = 1 + self.config["limit"]
         return next_page_token
 
     def get_url_params(
@@ -71,7 +74,7 @@ class AtlassianScimStream(RESTStream):
         else: 
             params["startIndex"] = 1
             
-        params["count"] = self.config["batch_size"]
+        params["count"] = self.config["limit"]
 
         return params
 

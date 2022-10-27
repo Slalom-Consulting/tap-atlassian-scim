@@ -20,7 +20,7 @@ class TapAtlassianScim(Tap):
 
     config_jsonschema = th.PropertiesList(
         th.Property(
-            'directory_api_key',
+            'api_key',
             th.StringType,
             required=True,
             description='API key for SCIM directory authentication'
@@ -32,7 +32,7 @@ class TapAtlassianScim(Tap):
             description='ID of the SCIM directory'
         ),
         th.Property(
-            "batch_size",
+            "limit",
             th.IntegerType,
             description='Number of results returned per page (Default: 100, Max: 100)'
         ),
