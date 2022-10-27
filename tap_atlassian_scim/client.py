@@ -1,14 +1,13 @@
 """REST client handling, including atlassianScimStream base class."""
 
-import requests
-from typing import Any, Dict, Optional, Union, List, Iterable
+from typing import Any, Dict, Optional
 from memoization import cached
 from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
+from tap_atlassian_scim.pagination import AtlassianScimPaginator
 
 class AtlassianScimStream(RESTStream):
     """atlassianScim stream class."""
-
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
@@ -22,10 +21,8 @@ class AtlassianScimStream(RESTStream):
     @cached
     def authenticator(self) -> BearerTokenAuthenticator:
         """Return a new authenticator object."""
-        return BearerTokenAuthenticator.create_for_stream(
-            self,
-            token=self.config['api_key']
-        )
+        token = self.config['api_key']
+        return BearerTokenAuthenticator.create_for_stream(self, token)
 
     @property
     def http_headers(self) -> dict:
@@ -33,48 +30,24 @@ class AtlassianScimStream(RESTStream):
         headers = {'Accept': 'application/json'}
 
         if 'user_agent' in self.config:
-            headers['User-Agent'] = self.config.get('user_agent')
+            headers['User-Agent'] = self.config['user_agent']
 
         return headers
 
-    #def get_new_paginator(self) -> BaseAPIPaginator:
-    #    return None
-
-    def get_next_page_token(
-        self, response: requests.Response, previous_token: Optional[Any]
-    ) -> Optional[Any]:
-        """Return a token for identifying next page or None if no more pages."""
-        # TODO: If pagination is required, return a token which can be used to get the
-        #       next page. If this is the final page, return "None" to end the
-        #       pagination loop.
-        
-        # if self.next_page_token_jsonpath:
-        #     all_matches = extract_jsonpath(
-     #            self.next_page_token_jsonpath, response.json()
-        #     )
-        #     first_match = next(iter(all_matches), None)
-        #     next_page_token = first_match
-        if previous_token: 
-            if response.json().get("totalResults") < previous_token:
-                return None 
-            else:
-                next_page_token = previous_token + self.config["limit"]
-        else:
-            next_page_token = 1 + self.config["limit"]
-        return next_page_token
+    def get_new_paginator(self) -> AtlassianScimPaginator:
+        limit = self.config['limit']
+        return AtlassianScimPaginator(start_value=1, page_size=limit)
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
         """Return a dictionary of values to be used in URL parameterization."""
-        params: dict = {}
+        params = {
+            'startIndex': 1,
+            'count': self.config['limit']
+        }
+        
         if next_page_token:
-            params["startIndex"] = next_page_token
-
-        else: 
-            params["startIndex"] = 1
-            
-        params["count"] = self.config["limit"]
+            params['startIndex'] = next_page_token
 
         return params
-
