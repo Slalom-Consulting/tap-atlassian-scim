@@ -1,12 +1,8 @@
 """REST client handling, including atlassianScimStream base class."""
 
 import requests
-from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
-
 from memoization import cached
-
-from singer_sdk.helpers.jsonpath import extract_jsonpath
 from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
 
@@ -20,25 +16,25 @@ class AtlassianScimStream(RESTStream):
         directory_id = self.config['directory_id']
         return f'{api_url}/scim/directory/{directory_id}'
 
-    records_jsonpath = "$.Resources[*]"  # Or override `parse_response`.
-    # next_page_token_jsonpath = "$.next_page"  # Or override `get_next_page_token`.
+    records_jsonpath = '$.Resources[*]'
 
     @property
+    @cached
     def authenticator(self) -> BearerTokenAuthenticator:
         """Return a new authenticator object."""
         return BearerTokenAuthenticator.create_for_stream(
             self,
-            token=self.config.get("directory_api_key")
+            token=self.config.get('directory_api_key')
         )
 
     @property
     def http_headers(self) -> dict:
         """Return the http headers needed."""
-        headers = {"Accept": "application/json"}
-        if "user_agent" in self.config:
-            headers["User-Agent"] = self.config.get("user_agent")
-        # If not using an authenticator, you may also provide inline auth headers:
-        # headers["Private-Token"] = self.config.get("auth_token")
+        headers = {'Accept': 'application/json'}
+
+        if 'user_agent' in self.config:
+            headers['User-Agent'] = self.config.get('user_agent')
+
         return headers
 
     def get_next_page_token(
@@ -77,27 +73,5 @@ class AtlassianScimStream(RESTStream):
             
         params["count"] = self.config["batch_size"]
 
-        # if self.replication_key:
-        #    params["sort"] = "asc"
-        #    params["order_by"] = self.replication_key
         return params
 
-    def prepare_request_payload(
-        self, context: Optional[dict], next_page_token: Optional[Any]
-    ) -> Optional[dict]:
-        """Prepare the data payload for the REST API request.
-
-        By default, no payload will be sent (return None).
-        """
-        # TODO: Delete this method if no payload is required. (Most REST APIs.)
-        return None
-
-    def parse_response(self, response: requests.Response) -> Iterable[dict]:
-        """Parse the response and return an iterator of result rows."""
-        # TODO: Parse response body and return a set of records.
-        yield from extract_jsonpath(self.records_jsonpath, input=response.json())
-
-    def post_process(self, row: dict, context: Optional[dict]) -> dict:
-        """As needed, append or transform raw data to match expected structure."""
-        # TODO: Delete this method if not needed.
-        return row
