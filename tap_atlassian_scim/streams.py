@@ -3,9 +3,9 @@
 from pathlib import Path
 from typing import Any, Dict, Optional, Union, List, Iterable
 from singer_sdk import typing as th  # JSON Schema typing helpers
-from tap_atlassian_scim.client import atlassianScimStream
+from tap_atlassian_scim.client import AtlassianScimStream
 
-class UsersStream(atlassianScimStream):
+class UsersStream(AtlassianScimStream):
     """Users stream"""
     name = "users"
     path = "/Users"
@@ -233,7 +233,7 @@ class UsersStream(atlassianScimStream):
     ).to_dict()
 
 
-class GroupsStream(atlassianScimStream):
+class GroupsStream(AtlassianScimStream):
     """Groups stream"""
     name = "groups"
     path = "/Groups"
