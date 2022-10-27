@@ -4,6 +4,7 @@ from pathlib import Path
 from tap_atlassian_scim.client import AtlassianScimStream
 
 SCHEMAS_DIR = Path(__file__).parent / Path('./schemas')
+
 class UsersStream(AtlassianScimStream):
     """Users stream"""
     name = 'users'
@@ -11,6 +12,7 @@ class UsersStream(AtlassianScimStream):
     primary_keys = ['id']
     replication_key = None
     schema_filepath = f'{SCHEMAS_DIR}/users.json'
+
 
 class GroupsStream(AtlassianScimStream):
     """Groups stream"""
