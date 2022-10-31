@@ -34,6 +34,7 @@ class TapAtlassianScim(Tap):
         th.Property(
             "limit",
             th.IntegerType,
+            default=100,
             description='Number of results returned per page (Default: 100, Max: 100)'
         ),
         th.Property(
