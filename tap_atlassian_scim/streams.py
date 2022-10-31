@@ -5,6 +5,7 @@ from tap_atlassian_scim.client import AtlassianScimStream
 
 SCHEMAS_DIR = Path(__file__).parent / Path('./schemas')
 
+
 class UsersStream(AtlassianScimStream):
     """Users stream"""
     name = 'users'

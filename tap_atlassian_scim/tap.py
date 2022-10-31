@@ -14,6 +14,7 @@ STREAM_TYPES = [
     GroupsStream,
 ]
 
+
 class TapAtlassianScim(Tap):
     """atlassian-scim tap class."""
     name = 'tap-atlassian-scim'
