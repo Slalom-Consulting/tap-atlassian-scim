@@ -5,8 +5,10 @@ from memoization import cached
 from singer_sdk.streams import RESTStream
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from tap_atlassian_scim.pagination import AtlassianScimPaginator
+from urllib.parse import urljoin
 
 PAGINATION_INDEX = 1
+API_URL = 'https://api.atlassian.com'
 
 
 class AtlassianScimStream(RESTStream):
@@ -14,9 +16,9 @@ class AtlassianScimStream(RESTStream):
     @property
     def url_base(self) -> str:
         """Return the API URL root, configurable via tap settings."""
-        api_url = self.config.get('api_url')
-        directory_id = self.config.get('directory_id')
-        return f'{api_url}/scim/directory/{directory_id}'
+        base = self.config.get('api_url', API_URL)
+        endpoint = '/scim/directory/{directory_id}'
+        return urljoin(base, endpoint)
 
     records_jsonpath = '$.Resources[*]'
 
@@ -25,7 +27,7 @@ class AtlassianScimStream(RESTStream):
     def authenticator(self) -> BearerTokenAuthenticator:
         """Return a new authenticator object."""
         token = self.config.get('api_key')
-        return BearerTokenAuthenticator.create_for_stream(self, token)
+        return BearerTokenAuthenticator(self, token)
 
     @property
     def http_headers(self) -> dict:

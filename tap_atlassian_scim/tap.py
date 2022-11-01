@@ -46,8 +46,7 @@ class TapAtlassianScim(Tap):
         th.Property(
             'api_url',
             th.StringType,
-            default='https://api.atlassian.com',
-            description='API URL'
+            description='Override the Atlassian API base URL'
         )
     ).to_dict()
 
