@@ -23,31 +23,31 @@ class TapAtlassianScim(Tap):
         th.Property(
             'api_key',
             th.StringType,
-            required=True,
-            secret=True,
-            description='API key for SCIM directory authentication'
+            required = True,
+            secret = True,
+            description = 'API key for SCIM directory authentication.'
         ),
         th.Property(
             "directory_id",
             th.UUIDType,
-            required=True,
-            description='ID of the SCIM directory'
+            required = True,
+            description = 'ID of the SCIM directory.'
         ),
         th.Property(
             "limit",
             th.IntegerType,
-            default=100,
-            description='Number of results returned per page (Default: 100, Max: 100)'
+            default = 100,
+            description = 'Number of results returned per page. (Max: 100)'
         ),
         th.Property(
             "user_agent",
             th.StringType,
-            description='User agent to present to the API'
+            description = 'User agent to present to the API.'
         ),
         th.Property(
             'api_url',
             th.StringType,
-            description='Override the Atlassian API base URL'
+            description = 'Override the Atlassian API base URL.'
         )
     ).to_dict()
 
