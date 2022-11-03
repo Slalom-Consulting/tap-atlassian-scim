@@ -29,6 +29,10 @@ class AtlassianScimStream(RESTStream):
         token = self.config.get('api_key')
         return BearerTokenAuthenticator(self, token)
 
+    def get_new_paginator(self) -> AtlassianScimPaginator:
+        limit = self.config.get('limit')
+        return AtlassianScimPaginator(start_value=PAGINATION_INDEX, page_size=limit)
+
     @property
     def http_headers(self) -> dict:
         """Return the http headers needed."""
@@ -38,10 +42,6 @@ class AtlassianScimStream(RESTStream):
             headers['User-Agent'] = self.config['user_agent']
 
         return headers
-
-    def get_new_paginator(self) -> AtlassianScimPaginator:
-        limit = self.config.get('limit')
-        return AtlassianScimPaginator(start_value=PAGINATION_INDEX, page_size=limit)
 
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]

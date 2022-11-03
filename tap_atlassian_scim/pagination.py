@@ -1,3 +1,5 @@
+"""Pagination handling for AtlassianScimStream."""
+
 from singer_sdk.pagination import BaseOffsetPaginator
 from requests import Response
 
