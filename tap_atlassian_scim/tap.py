@@ -24,6 +24,7 @@ class TapAtlassianScim(Tap):
             'api_key',
             th.StringType,
             required=True,
+            secret=True,
             description='API key for SCIM directory authentication'
         ),
         th.Property(
