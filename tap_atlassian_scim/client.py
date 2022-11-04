@@ -34,8 +34,8 @@ class AtlassianScimStream(RESTStream):
         """Return the http headers needed."""
         headers = {'Accept': 'application/json'}
 
-        if 'user_agent' in self.config:
-            headers['User-Agent'] = self.config['user_agent']
+        if self.config.get('user_agent'):
+            headers['User-Agent'] = self.config.get('user_agent')
 
         return headers
 
