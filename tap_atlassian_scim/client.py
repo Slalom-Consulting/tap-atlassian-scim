@@ -17,7 +17,6 @@ class AtlassianScimStream(RESTStream):
 
     @property
     def url_base(self) -> str:
-        """Return the API URL root, configurable via tap settings."""
         base = self.config.get('api_url', API_URL)
         endpoint = '/scim/directory/{directory_id}'
         return urljoin(base, endpoint)
@@ -25,13 +24,11 @@ class AtlassianScimStream(RESTStream):
     @property
     @cached
     def authenticator(self) -> BearerTokenAuthenticator:
-        """Return a new authenticator object."""
         token = self.config.get('api_key')
         return BearerTokenAuthenticator(self, token)
 
     @property
     def http_headers(self) -> dict:
-        """Return the http headers needed."""
         headers = {'Accept': 'application/json'}
 
         if self.config.get('user_agent'):
@@ -46,9 +43,8 @@ class AtlassianScimStream(RESTStream):
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        """Return a dictionary of values to be used in URL parameterization."""
         return {
-            'startIndex': next_page_token if next_page_token else PAGINATION_INDEX,
+            'startIndex': next_page_token or PAGINATION_INDEX,
             'count': self.config.get('limit')
         }   
 
