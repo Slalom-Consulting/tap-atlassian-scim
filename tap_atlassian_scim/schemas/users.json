@@ -1,0 +1,321 @@
+{
+  "type": "object",
+  "properties": {
+    "schemas": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string"
+        ]
+      },
+      "description": "SCIM schemas that define the attributes present in the current JSON structure."
+    },
+    "userName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier defined by the provisioning client. Atlassian SCIM service will verify the value and guarantee its uniqueness."
+    },
+    "emails": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Email address."
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Type of email address, for example \"work\" or \"personal\"."
+          },
+          "primary": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Boolean value indicating whether this is the primary email address."
+          }
+        }
+      },
+      "description": "Email addresses for the User. One value is marked as primary."
+    },
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier defined by Atlassian SCIM Service. CaseExact."
+    },
+    "externalId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier defined by provisioning client. This field is case-sensitive. Uniqueness is controlled by client."
+    },
+    "name": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "formatted": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The full name, including all middle names, titles, and suffixes as appropriate, formatted for display."
+        },
+        "familyName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The family name of the User."
+        },
+        "givenName": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "The given name of the User."
+        },
+        "middleName": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The middle name(s) of the User."
+        },
+        "honorificPrefix": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The honorific prefix(es) of the User, or title in most Western languages."
+        },
+        "honorificSuffix": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "The honorific suffix(es) of the User, or suffix in most Western languages."
+        }
+      },
+      "description": "The components of the user's name."
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User display name."
+    },
+    "nickName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User nickname."
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User title."
+    },
+    "preferredLanguage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User preferred language."
+    },
+    "department": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User department."
+    },
+    "organization": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User organization."
+    },
+    "timezone": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "User timezone. e.g. \"America/Los_Angeles\"."
+    },
+    "phoneNumbers": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Phone number."
+          },
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Type of phone number, for example \"work\" or \"personal\"."
+          },
+          "primary": {
+            "type": [
+              "boolean",
+              "null"
+            ],
+            "description": "Boolean value indicating whether phone number is primary."
+          }
+        }
+      },
+      "description": "Phone numbers for the user."
+    },
+    "meta": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "resourceType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the resource type of the resource. This field is case-sensitive."
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URI of the resource being returned."
+        },
+        "lastModified": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "The most recent DateTime that the details of this resource were updated."
+        },
+        "created": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "description": "User metadata information."
+    },
+    "groups": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "display": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "$ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "description": "SCIM groups user belongs to."
+    },
+    "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "organization": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Organization the user belongs to."
+        },
+        "department": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Department the user belongs to."
+        }
+      },
+      "description": "Enterprise user information."
+    },
+    "urn:scim:schemas:extension:atlassian-external:1.0": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "atlassianAccountId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "description": "Atlassian specific SCIM Extension."
+    },
+    "active": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "A Boolean value indicating the user's administrative status."
+    }
+  }
+}

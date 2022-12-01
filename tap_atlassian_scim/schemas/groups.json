@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "properties": {
+    "schemas": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "string"
+        ]
+      },
+      "description": "SCIM schemas that define the attributes present in the current JSON structure."
+    },
+    "id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Unique identifier defined by Atlassian SCIM Service. This field is read-only and case-sensitive. It is ignored if specified in the payload during user creation or modification."
+    },
+    "externalId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier defined by provisioning client. CaseExact. Uniqueness is controlled by client."
+    },
+    "displayName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Group display name. This field is immutable, required, and read-only."
+    },
+    "members": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "display": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "created": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "description": "Group members"
+    },
+    "meta": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "resourceType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the resource type of the resource. This field is read-only and case-sensitive."
+        },
+        "location": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The URI of the resource being returned. This field is read-only."
+        },
+        "lastModified": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The most recent DateTime that the details of this resource were updated. This field is read-only."
+        },
+        "created": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The DateTime that the resource was added to Atlassian SCIM service. This field is read-only."
+        }
+      },
+      "description": "Group metadata information."
+    }
+  }
+}
