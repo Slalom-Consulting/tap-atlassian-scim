@@ -1,0 +1,41 @@
+{
+    "schemas": [
+        "urn:scim:schemas:extension:atlassian-external:1.0",
+        "urn:ietf:params:scim:schemas:core:2.0:User",
+        "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"
+    ],
+    "userName": "test@test.test",
+    "emails": [
+        {
+            "value": "test@test.test",
+            "type": "work",
+            "primary": true
+        }
+    ],
+    "externalId": "00000000-0000-0000-0000-000000000000",
+    "name": {
+        "familyName": "Test",
+        "givenName": "Test"
+    },
+    "displayName": "Test Test",
+    "title": "Test",
+    "meta": {
+        "resourceType": "User",
+        "location": "https://api.atlassian.com/scim/directory/00000000-0000-0000-0000-000000000000/Users/00000000-0000-0000-0000-000000000000",
+        "lastModified": "2022-01-01T00:00:00.000000Z",
+        "created": "2021-01-01T00:00:00.00000Z"
+    },
+    "groups": [
+        {
+            "type": "Group",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "display": "Test",
+            "$ref": "https://api.atlassian.com/scim/directory/00000000-0000-0000-0000-000000000000/Groups/00000000-0000-0000-0000-000000000000"
+        }
+    ],
+    "urn:scim:schemas:extension:atlassian-external:1.0": {
+        "atlassianAccountId": "00000000-0000-0000-0000-000000000000"
+    },
+    "id": "00000000-0000-0000-0000-000000000000",
+    "active": true
+}

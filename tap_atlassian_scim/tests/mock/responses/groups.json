@@ -1,0 +1,22 @@
+{
+    "schemas": [
+        "urn:ietf:params:scim:schemas:core:2.0:Group"
+    ],
+    "id": "00000000-0000-0000-0000-000000000000",
+    "externalId": "00000000-0000-0000-0000-000000000000",
+    "displayName": "Test",
+    "members": [
+        {
+            "type": "User",
+            "value": "00000000-0000-0000-0000-000000000000",
+            "display": "test@test.test",
+            "$ref": "https://api.atlassian.com/scim/directory/00000000-0000-0000-0000-000000000000/Users/00000000-0000-0000-0000-000000000000"
+        }
+    ],
+    "meta": {
+        "resourceType": "Group",
+        "location": "https://api.atlassian.com/scim/directory/00000000-0000-0000-0000-000000000000/Groups/00000000-0000-0000-0000-000000000000",
+        "lastModified": "2022-01-01T00:00:00.000000Z",
+        "created": "2021-01-01T00:00:00.00000Z"
+    }
+}
