@@ -60,7 +60,7 @@
               "null"
             ]
           },
-          "created": {
+          "$ref": {
             "type": [
               "string",
               "null"

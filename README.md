@@ -55,14 +55,36 @@ tap-atlassian-scim --about --format=markdown
 | limit               | False    |     100 | Number of results returned per page. (Max: 100) |
 | user_agent          | False    | None    | User agent to present to the API. |
 | api_url             | False    | None    | Override the Atlassian API base URL. |
+| stream_config       | False    | None    | A list of dictionaries for specifing addtional configurations for a specified stream |
 
-A full list of supported settings and capabilities is available by running: `tap-atlassian-scim --about`
+A full list of supported settings and capabilities for this
+tap is available by running:
 
-### Configure using environment variables
+```bash
+tap-atlassian-scim --about
+```
 
-This Singer tap will automatically import any environment variables within the working directory's
-`.env` if the `--config=ENV` is provided, such that config values will be considered if a matching
-environment variable is set either in the terminal context or in the `.env` file.
+### Settings for Specific Streams
+
+Settings can be added on a per stream basis and can be set using the stream_config setting. The stream_config setting takes a list of dictionaries, requiring the stream name as a value in the stream key. If the same stream name is added multilpe times, only the last will be used.
+
+| Setting             | Required | Default | Description |
+|:--------------------|:--------:|:-------:|:------------|
+| stream              | True     | None    | Name of the stream to configure |
+| parameters          | False    | None    | URL query string to send to the stream endpoint |
+
+Example:
+
+```json
+{
+    "stream_config": [
+        {
+            "stream": "STREAM_NAME",
+            "parameters": "URL_QUERY_STRING"
+        }
+    ]
+}
+```
 
 ### Configure using environment variables
 

@@ -1,0 +1,59 @@
+{
+  "schemas": [
+    "<string>"
+  ],
+  "userName": "<string>",
+  "emails": [
+    {
+      "value": "<string>",
+      "type": "<string>",
+      "primary": true
+    }
+  ],
+  "id": "<string>",
+  "externalId": "<string>",
+  "name": {
+    "formatted": "<string>",
+    "familyName": "<string>",
+    "givenName": "<string>",
+    "middleName": "<string>",
+    "honorificPrefix": "<string>",
+    "honorificSuffix": "<string>"
+  },
+  "displayName": "<string>",
+  "nickName": "<string>",
+  "title": "<string>",
+  "preferredLanguage": "<string>",
+  "department": "<string>",
+  "organization": "<string>",
+  "timezone": "<string>",
+  "phoneNumbers": [
+    {
+      "value": "<string>",
+      "type": "<string>",
+      "primary": true
+    }
+  ],
+  "meta": {
+    "resourceType": "USER",
+    "location": "<string>",
+    "lastModified": "<string>",
+    "created": "<string>"
+  },
+  "groups": [
+    {
+      "type": "<string>",
+      "value": "<string>",
+      "display": "<string>",
+      "$ref": "<string>"
+    }
+  ],
+  "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User": {
+    "organization": "<string>",
+    "department": "<string>"
+  },
+  "urn:scim:schemas:extension:atlassian-external:1.0": {
+    "atlassianAccountId": "<string>"
+  },
+  "active": true
+}

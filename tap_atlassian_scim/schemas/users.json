@@ -89,7 +89,7 @@
         },
         "givenName": {
           "type": [
-            "boolean",
+            "string",
             "null"
           ],
           "description": "The given name of the User."
@@ -110,7 +110,7 @@
         },
         "honorificSuffix": {
           "type": [
-            "boolean",
+            "string",
             "null"
           ],
           "description": "The honorific suffix(es) of the User, or suffix in most Western languages."
@@ -222,7 +222,7 @@
         },
         "lastModified": {
           "type": [
-            "boolean",
+            "string",
             "null"
           ],
           "description": "The most recent DateTime that the details of this resource were updated."
