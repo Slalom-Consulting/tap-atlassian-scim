@@ -1,0 +1,22 @@
+{
+  "schemas": [
+    "<string>"
+  ],
+  "id": "<string>",
+  "externalId": "<string>",
+  "displayName": "<string>",
+  "members": [
+    {
+      "type": "<string>",
+      "value": "<string>",
+      "display": "<string>",
+      "$ref": "<string>"
+    }
+  ],
+  "meta": {
+    "resourceType": "USER",
+    "location": "<string>",
+    "lastModified": "<string>",
+    "created": "<string>"
+  }
+}
