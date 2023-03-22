@@ -1,7 +1,7 @@
 """REST client handling, including atlassianScimStream base class."""
 
 from typing import Any, Dict, Optional
-from urllib.parse import urljoin, parse_qsl
+from urllib.parse import parse_qsl, urljoin
 
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from singer_sdk.streams import RESTStream
