@@ -1,7 +1,7 @@
 """REST client handling, including atlassianScimStream base class."""
 
 from typing import Any, Dict, Optional
-from urllib.parse import urljoin
+from urllib.parse import urljoin, parse_qsl
 
 from singer_sdk.authenticators import BearerTokenAuthenticator
 from singer_sdk.streams import RESTStream
@@ -41,10 +41,29 @@ class AtlassianScimStream(RESTStream):
         limit = int(self.config["limit"])
         return AtlassianScimPaginator(start_value=PAGINATION_INDEX, page_size=limit)
 
+    def _get_strem_config(self) -> dict:
+        """Get parameters set in config."""
+        config: dict = {}
+
+        stream_configs = self.config.get("stream_config", [])
+        if not stream_configs:
+            return config
+
+        config_list = [
+            conf for conf in stream_configs if conf.get("stream") == self.name
+        ] or [None]
+        config_dict = config_list[-1] or {}
+        stream_config = {k: v for k, v in config_dict.items() if k != "stream"}
+        return stream_config
+
+    def _get_stream_params(self) -> dict:
+        stream_params = self._get_strem_config().get("parameters", "")
+        return {qry[0]: qry[1] for qry in parse_qsl(stream_params.lstrip("?"))}
+
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        return {
-            "startIndex": next_page_token or PAGINATION_INDEX,
-            "count": self.config.get("limit"),
-        }
+        params = self._get_stream_params()
+        params["count"] = self.config.get("limit")
+        params["startIndex"] = next_page_token or PAGINATION_INDEX
+        return params
