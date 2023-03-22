@@ -4,7 +4,7 @@ import json
 
 import requests_mock
 
-from ..mock.config import mocks
+from tap_atlassian_scim.tests.mock.config import mocks
 
 
 def mock_api(func, tap_config):
