@@ -56,7 +56,7 @@ class AtlassianScimStream(RESTStream):
     def get_url_params(
         self, context: Optional[dict], next_page_token: Optional[Any]
     ) -> Dict[str, Any]:
-        params = self._get_stream_params()
+        params = self.get_stream_params()
         params["count"] = self.config.get("limit")
         params["startIndex"] = next_page_token or PAGINATION_INDEX
         return params
